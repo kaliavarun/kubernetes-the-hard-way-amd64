@@ -23,6 +23,20 @@ XXX.XXX.XXX.XXX server.kubernetes.local server
 XXX.XXX.XXX.XXX node-0.kubernetes.local node-0 10.200.0.0/24
 XXX.XXX.XXX.XXX node-1.kubernetes.local node-1 10.200.1.0/24
 ```
+> :warning: **If the IPs are assigned by a router/DHCP, they will change after the reboot. Use netplan to configure static ip at /etc/netplan**: Be very careful here!
+```text
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    ens18:
+      addresses: [192.168.0.110/24]
+      routes:
+          - to: default
+            via: 192.168.0.1
+      nameservers:
+        addresses: [8.8.8.8,8.8.4.4]
+```
 
 Now it's your turn to create a `machines.txt` file with the details for the three machines you will be using to create your Kubernetes cluster. Use the example machine database from above and add the details for your machines. 
 
